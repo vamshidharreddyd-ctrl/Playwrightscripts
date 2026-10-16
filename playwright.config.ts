@@ -4,19 +4,22 @@ export default defineConfig({
     testDir: './tests/Testsclass',
 
     fullyParallel: true,
-    workers: process.env.CI ? 4 : undefined,
+    workers: process.env.CI ? 2 : undefined,
+    retries: process.env.CI ? 1 : 0,
 
     reporter: [
         ['list'],
         ['html', {
-            outputFolder: 'playwright-report',
+            outputFolder: process.env.PW_REPORT_DIR || 'playwright-report',
             open: 'never'
         }]
     ],
 
-    retries: process.env.CI ? 1 : 0,
+    outputDir: process.env.PW_SCREENSHOT_DIR || 'Screenshots',
 
     use: {
-        trace: 'on-first-retry'
+        screenshot: 'only-on-failure',
+        trace: 'off',
+        video: 'off'
     }
 });
