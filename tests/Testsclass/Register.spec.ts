@@ -4,7 +4,7 @@ import{ registers} from '../pages/register';
 
 
 
-test.describe("registor into the Site",()=>{
+test.describe("registor into the Site",{ tag: '@login' },()=>{
 
     test('registor with valid data',async({register,create,page})=>{
      await register('https://automationexercise.com/');
