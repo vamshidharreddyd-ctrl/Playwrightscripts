@@ -1,32 +1,22 @@
-
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests/Testsclass',
+    testDir: './tests/Testsclass',
 
-  // Jenkins CI settings
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+    fullyParallel: true,
+    workers: process.env.CI ? 4 : undefined,
 
-  // Generate the HTML report in this folder
-  reporter: [
-    ['html', {
-      outputFolder: 'playwright-report',
-      open: 'never'
-    }]
-  ],
+    reporter: [
+        ['list'],
+        ['html', {
+            outputFolder: 'playwright-report',
+            open: 'never'
+        }]
+    ],
 
-  use: {
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
+    retries: process.env.CI ? 1 : 0,
 
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-  ],
+    use: {
+        trace: 'on-first-retry'
+    }
 });
